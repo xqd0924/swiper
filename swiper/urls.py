@@ -17,4 +17,5 @@ from django.conf.urls import url
 from user import api as user_api
 urlpatterns = [
     url(r'^api/user/verify/', user_api.get_verify_code),
+    url(r'^api/user/login/', user_api.login),
 ]
