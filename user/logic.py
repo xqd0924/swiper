@@ -1,10 +1,14 @@
 import random
+import os
+from urllib.parse import urljoin
 
 import requests
+from django.conf import settings
 from django.core.cache import cache
 
 from swiper import config
 from worker import call_by_worker
+from lib.qncloud import async_upload_to_qiniu
 
 
 def gen_verify_code(length=6):
@@ -31,3 +35,20 @@ def check_vcode(phonenum, vcode):
     saved_vcode = cache.get(key)
     print(type(saved_vcode))
     return saved_vcode == int(vcode)
+
+
+def save_upload_file(user, upload_file):
+    '''保存上传文件，并上传到七牛云'''
+    ext_name = os.path.splitext(upload_file.name)[-1]
+    filename = 'Avatar-%s%s' % (user.id, ext_name)
+    filepath = os.path.join(settings.BASE_DIR, settings.MEDIA_ROOT, filename)
+
+    with open(filepath, 'wb') as newfile:
+        for chunk in upload_file.chunks():
+            newfile.write(chunk)
+
+    async_upload_to_qiniu(filepath, filename)
+
+    url = urljoin(config.QN_BASE_URL, filename)
+    user.avatar = url
+    user.save()

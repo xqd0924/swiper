@@ -12,3 +12,10 @@ HY_SMS_PARAMS = {
     'mobile': None,
     'format': 'json'
 }
+
+
+# 七牛云配置
+QN_ACCESSKEY = 'i60FtrMs_5p-Ymi5RL5vuDAx-JWdghU6zsRRD-YF'
+QN_SECRETKEY = '7rtfVRKJkZ6XbnG3XK5s3Xe2IgYSHAON5T-MsQja'
+QN_BUCKET_NAME = 'xuqidong'
+QN_BASE_URL = 'http://q9i2yanet.bkt.clouddn.com'

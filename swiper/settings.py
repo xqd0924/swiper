@@ -124,3 +124,5 @@ CACHES = {
         }
     }
 }
+
+MEDIA_ROOT = 'media'
