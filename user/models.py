@@ -4,6 +4,8 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from lib.orm import ModelMixin
+from social.models import Friend
+
 
 SEX = (
     ('男', '男'),
@@ -35,6 +37,10 @@ class User(models.Model):
         if not hasattr(self, '_profile'):
             self._profile, _ = Profile.objects.get_or_create(id=self.id)
         return self._profile
+
+    def friends(self):
+        friend_id_list = Friend.friend_id_list(self.id)
+        return User.objects.filter(id__in=friend_id_list)
 
     def to_dict(self):
         return {
