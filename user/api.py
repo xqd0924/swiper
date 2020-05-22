@@ -23,7 +23,7 @@ def login(request):
         request.session['uid'] = user.id
         return render_json(user.to_dict())
     else:
-        return render_json(None, error.VCODE_ERROR)
+        raise error.VcodeError
 
 
 def get_profile(request):
@@ -41,7 +41,7 @@ def modify_profile(request):
         user.profile.save()
         return render_json(None)
     else:
-        return render_json(form.errors, error.PROFILE_ERROR)
+        raise error.ProfileError
 
 
 def upload_avatar(request):
