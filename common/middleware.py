@@ -25,4 +25,11 @@ class AuthMiddleware(MiddlewareMixin):
                 return
             except User.DoesNotExist:
                 request.session.flush()
-        return render_json(None, error.LOGIN_ERROR)
+        return render_json(None, error.LoginRequire.code)
+
+
+class LogicErrorMiddleware(MiddlewareMixin):
+    def process_exception(self, request, exception):
+        '''异常处理'''
+        if isinstance(exception, error.LogicError):
+            return render_json(None, exception.code) # 处理逻辑错误

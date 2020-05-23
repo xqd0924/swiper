@@ -17,6 +17,7 @@ from django.conf.urls import url
 
 from user import api as user_api
 from social import api as social_api
+from vip import api as vip_api
 
 
 urlpatterns = [
@@ -33,4 +34,6 @@ urlpatterns = [
     url(r'^api/social/rewind', social_api.rewind),
     url(r'^api/social/liked_me', social_api.show_liked_me),
     url(r'^api/social/get_friends', social_api.get_friends),
+
+    url(r'^api/vip/permissions', vip_api.show_vip_permissions),
 ]

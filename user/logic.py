@@ -9,6 +9,7 @@ from django.core.cache import cache
 from swiper import config
 from worker import call_by_worker
 from lib.qncloud import async_upload_to_qiniu
+from common.error import VcodeExist
 
 
 def gen_verify_code(length=6):
@@ -17,16 +18,24 @@ def gen_verify_code(length=6):
 
 
 @call_by_worker
+def send_sms(phonenum, msg):
+    '''发送短信'''
+    sms_cfg = config.HY_SMS_PARAMS.copy()
+    sms_cfg['content'] = sms_cfg['content'] % msg
+    sms_cfg['mobile'] = phonenum
+    response = requests.post(config.HY_SMS_URL, data=sms_cfg)
+    return response
+
+
 def send_verify_code(phonenum):
     '''异步发送验证码'''
     vcode = gen_verify_code()
     key = 'VerifyCode-%s' % phonenum
-    cache.set(key, vcode, 120)
-    sms_cfg = config.HY_SMS_PARAMS.copy()
-    sms_cfg['content'] = sms_cfg['content'] % vcode
-    sms_cfg['mobile'] = phonenum
-    response = requests.post(config.HY_SMS_URL, data=sms_cfg)
-    return response
+    if not cache.has_key(key):
+        cache.set(key, vcode, 120)
+        send_sms(phonenum, vcode)
+    else:
+        raise VcodeExist
 
 
 def check_vcode(phonenum, vcode):
