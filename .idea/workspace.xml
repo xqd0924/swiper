@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="84090fd1-990a-470a-9494-f9f073c05e23" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/api.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/http.py" beforeDir="false" afterPath="$PROJECT_DIR$/lib/http.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -63,10 +63,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/social/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26">
+            <state relative-caret-position="-92">
               <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="8" />
             </state>
           </provider>
@@ -138,11 +138,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="http.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="http.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/http.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="78">
-              <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+            <state relative-caret-position="56">
+              <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -158,6 +158,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -174,7 +179,6 @@
         <option value="$PROJECT_DIR$/social/logic.py" />
         <option value="$PROJECT_DIR$/scripts/init.py" />
         <option value="$PROJECT_DIR$/vip/api.py" />
-        <option value="$PROJECT_DIR$/lib/http.py" />
         <option value="$PROJECT_DIR$/user/logic.py" />
         <option value="$PROJECT_DIR$/common/error.py" />
         <option value="$PROJECT_DIR$/vip/models.py" />
@@ -185,6 +189,7 @@
         <option value="$PROJECT_DIR$/swiper/urls.py" />
         <option value="$PROJECT_DIR$/user/models.py" />
         <option value="$PROJECT_DIR$/user/api.py" />
+        <option value="$PROJECT_DIR$/lib/http.py" />
       </list>
     </option>
   </component>
@@ -215,11 +220,6 @@
             <path>
               <item name="swiper" type="b2602c69:ProjectViewProjectNode" />
               <item name="swiper" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="swiper" type="b2602c69:ProjectViewProjectNode" />
-              <item name="swiper" type="462c0819:PsiDirectoryNode" />
-              <item name="social" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -345,11 +345,11 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.3298969" />
       <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.33161512" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.24914089" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18305598" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.76116836" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18305598" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" weight="0.3290469" />
       <window_info anchor="right" id="SciView" order="3" />
@@ -557,13 +557,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/http.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/genericpath.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
@@ -682,8 +675,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/social/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
+        <state relative-caret-position="-92">
           <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/http.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="56">
+          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
         </state>
       </provider>
     </entry>
