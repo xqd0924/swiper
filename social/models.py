@@ -49,7 +49,7 @@ class Friend(models.Model):
     @classmethod
     def make_friends(cls, uid1, uid2):
         uid1, uid2 = sorted([uid1, uid2])
-        cls.objects.get_or_create(uid1=uid1, uid2=uid2)
+        cls.get_or_create(uid1=uid1, uid2=uid2)
 
     @classmethod
     def is_friends(cls, uid1, uid2):

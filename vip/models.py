@@ -18,7 +18,7 @@ class Vip(models.Model):
     def has_perm(self, perm_name):
         '''检查该等级 VIP 是否具有某权限'''
         try:
-            perm = Permission.objects.get(name=perm_name)
+            perm = Permission.get(name=perm_name)
         except Permission.DoesNotExist:
             return False
         else:
