@@ -3,7 +3,6 @@ import datetime
 from django.db import models
 from django.utils.functional import cached_property
 
-from lib.orm import ModelMixin
 from social.models import Friend
 from vip.models import Vip
 
@@ -62,7 +61,7 @@ class User(models.Model):
         }
 
 
-class Profile(models.Model, ModelMixin):
+class Profile(models.Model):
     '''用户配置项'''
     dating_sex = models.CharField(default='女', max_length=8, choices=SEX, verbose_name='匹配的性别')
     location = models.CharField(max_length=32, verbose_name='目标城市')

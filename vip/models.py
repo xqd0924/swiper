@@ -1,9 +1,7 @@
 from django.db import models
 
-from lib.orm import ModelMixin
 
-
-class Vip(models.Model, ModelMixin):
+class Vip(models.Model):
     name = models.CharField(max_length=16, unique=True)
     level = models.IntegerField(unique=True)
     price = models.FloatField()
@@ -26,7 +24,7 @@ class Vip(models.Model, ModelMixin):
         else:
             return VipPermRelation.objects.filter(vip_id=self.id, perm_id=perm.id).exists()
 
-class Permission(models.Model, ModelMixin):
+class Permission(models.Model):
     name = models.CharField(max_length=32)
     desc = models.TextField()
 

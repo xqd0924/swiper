@@ -1,10 +1,10 @@
 
 class ModelMixin:
-    def to_dict(self):
+    def to_dict(self, ignore_fields=()):
         '''将model对象转换成dict'''
         data = {}
         for field in self._meta.fields:
             name = field.attname
-            value = getattr(self, name)
-            data[name] = value
+            if name not in ignore_fields:
+                data[name] = getattr(self, name)
         return data
