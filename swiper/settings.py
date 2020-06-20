@@ -123,8 +123,22 @@ CACHES = {
         "LOCATION": "redis://127.0.0.1:6379/0",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PICKLE_VERSION": -1,
             "PASSWORD": ""
         }
+    }
+}
+
+REDIS = {
+    'Master': {
+        'host': '127.0.0.1',
+        'port': 6379,
+        'db': 1,
+    },
+    'Slave': {
+        'host': '127.0.0.1',
+        'port': 6379,
+        'db': 1,
     }
 }
 
