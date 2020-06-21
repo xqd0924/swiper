@@ -2,6 +2,7 @@ import datetime
 
 from user.models import User
 from social.models import Swiped, Friend
+from lib.cache import rds
 
 
 def rcmd_users(user):
@@ -55,3 +56,29 @@ def users_liked_me(user):
     swipes = Swiped.liked_me(user.id)
     swiper_uid_list = [s.uid for s in swipes]
     return User.objects.filter(id__in=swiper_uid_list)
+
+
+def add_swipe_score(uid, flag):
+    '''添加被滑动的积分记录'''
+    score = {'like': 5, 'superlike': 7, 'dislike': -5}[flag]
+    rds.zincrby('HotSwiped', score, uid)
+
+
+def get_top_n_swiped(num=10):
+    '''获取 top N 的滑动数据'''
+    # 取出并清洗榜单数据
+    origin_data = rds.zrevrange('HotSwiped', 0, num - 1, withscores=True)
+    cleaned = [[int(uid), int(swiped)] for uid, swiped in origin_data]
+
+    # 取出用户数据
+    uid_list = [uid for uid, _ in cleaned]
+    users = User.objects.filter(id__in=uid_list)
+
+    # 将 users 按照 uid_list 的顺序进行排序
+    users = sorted(users, key=lambda user: uid_list.index(user.id))
+
+    # 整理最终结果
+    for item, user in zip(cleaned, users):
+        item[0] = user
+
+    return cleaned

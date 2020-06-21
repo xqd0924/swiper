@@ -21,6 +21,7 @@ def like(request):
     '''喜欢'''
     sid = int(request.POST.get('sid', 0))
     is_matched = logic.like_someone(request.user, sid)
+    logic.add_swipe_score(sid, 'like')
     return render_json({'is_matched': is_matched})
 
 
@@ -29,6 +30,7 @@ def superlike(request):
     '''超级喜欢'''
     sid = int(request.POST.get('sid'))
     is_matched = logic.superlike_someone(request.user, sid)
+    logic.add_swipe_score(sid, 'superlike')
     return render_json({'is_matched': is_matched})
 
 
@@ -37,6 +39,7 @@ def dislike(request):
     user = request.user
     sid = int(request.POST.get('sid'))
     Swiped.dislike(user.id, sid)
+    logic.add_swipe_score(sid, 'dislike')
     return render_json(None)
 
 
@@ -58,3 +61,11 @@ def show_liked_me(request):
 def get_friends(request):
     result = [frd.to_dict() for frd in request.user.friends()]
     return render_json(result)
+
+
+def hot_swiped(request):
+    '''获取最热榜单'''
+    data = logic.get_top_n_swiped(10)
+    for item in data:
+        item[0] = item[0].to_dict()
+    return render_json(data)
