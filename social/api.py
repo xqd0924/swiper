@@ -3,6 +3,7 @@ from lib.http import render_json
 from social import logic
 from social.models import Swiped
 from vip.logic import need_perm
+from lib.cache import rds
 
 
 def get_rcmd_users(request):
@@ -17,11 +18,19 @@ def get_rcmd_users(request):
     return render_json(result)
 
 
+def new_rcmd_users(request):
+    '''新的基于 Redis 推荐处理'''
+    users = logic.get_rcmd_user_from_redis(request.user)
+    result = [u.to_dict() for u in users]
+    return render_json(result)
+
+
 def like(request):
     '''喜欢'''
     sid = int(request.POST.get('sid', 0))
     is_matched = logic.like_someone(request.user, sid)
     logic.add_swipe_score(sid, 'like')
+    rds.srem('RCMD-%s' % request.user.id, sid)
     return render_json({'is_matched': is_matched})
 
 
@@ -31,6 +40,7 @@ def superlike(request):
     sid = int(request.POST.get('sid'))
     is_matched = logic.superlike_someone(request.user, sid)
     logic.add_swipe_score(sid, 'superlike')
+    rds.srem('RCMD-%s' % request.user.id, sid)
     return render_json({'is_matched': is_matched})
 
 
@@ -40,6 +50,7 @@ def dislike(request):
     sid = int(request.POST.get('sid'))
     Swiped.dislike(user.id, sid)
     logic.add_swipe_score(sid, 'dislike')
+    rds.srem('RCMD-%s' % request.user.id, sid)
     return render_json(None)
 
 

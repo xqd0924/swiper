@@ -5,6 +5,7 @@ from lib.http import render_json
 from user.models import User
 from common import error
 from user.forms import ProfileForm
+from social.logic import pre_rcmd
 
 
 def get_verify_code(request):
@@ -23,9 +24,15 @@ def login(request):
         user, created = User.get_or_create(phonenum=phonenum)
         # 记录登录状态
         request.session['uid'] = user.id
+        pre_rcmd(user)
         return render_json(user.to_dict())
     else:
         raise error.VcodeError
+
+
+def user_back(request):
+    pre_rcmd(request.user)
+    return render_json(None)
 
 
 def get_profile(request):

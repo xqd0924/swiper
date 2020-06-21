@@ -3,6 +3,7 @@ import datetime
 from user.models import User
 from social.models import Swiped, Friend
 from lib.cache import rds
+from worker import call_by_worker
 
 
 def rcmd_users(user):
@@ -19,6 +20,34 @@ def rcmd_users(user):
                                 birth_year__gte=min_year,
                                 birth_year__lte=max_year)
     return users
+
+
+@call_by_worker
+def pre_rcmd(user):
+    '''
+    推荐预处理
+
+    1. 加载我滑动过的人，到缓存，并添加过期时间
+    2. 执行推荐算法，得到一批用户
+    3. 再将取到的用户与缓存中被划过的数据进行去重处理
+    4. celery 将推荐结果添加到缓存
+    '''
+    # 将滑动记录添加到 Redis 的 set
+    swiped = Swiped.objects.filter(uid=user.id).only('sid')
+    swiped_sid_list = {s.sid for s in swiped}
+    rds.sadd('Swiped-%s' % user.id, *swiped_sid_list)
+
+    # 取出待推荐的用户 ID
+    rcmd_user_id_list = {u.id for u in rcmd_users(user).only('id')}
+
+    # 去重
+    rcmd_user_id_list = rcmd_user_id_list - swiped_sid_list
+    rds.sadd('RCMD-%s' % user.id, *rcmd_user_id_list)
+
+
+def get_rcmd_user_from_redis(user):
+    rcmd_uid_list = [int(uid) for uid in rds.srandmember('RCMD-%s' % user.id, 10)]
+    return User.objects.filter(id__in=rcmd_uid_list)
 
 
 def like_someone(user, sid):

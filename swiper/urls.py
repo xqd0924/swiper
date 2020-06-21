@@ -23,11 +23,13 @@ from vip import api as vip_api
 urlpatterns = [
     url(r'^api/user/verify', user_api.get_verify_code),
     url(r'^api/user/login', user_api.login),
+    url(r'^api/user/user_back$', user_api.user_back),
     url(r'^api/user/get_profile', user_api.get_profile),
     url(r'^api/user/profile/modify', user_api.modify_profile),
     url(r'^api/user/avatar/upload', user_api.upload_avatar),
 
     url(r'^api/social/rcmd_users', social_api.get_rcmd_users),
+    url(r'^api/social/new_rcmd_users', social_api.new_rcmd_users),
     url(r'^api/social/like$', social_api.like),
     url(r'^api/social/superlike', social_api.superlike),
     url(r'^api/social/dislike', social_api.dislike),
